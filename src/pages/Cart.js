@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { apiPlaceOrder } from '../api';
 
 function Cart({ cartItems, setCartItems, setCurrentPage, loggedInUser }) {
