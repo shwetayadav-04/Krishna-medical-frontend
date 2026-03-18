@@ -2390,3 +2390,379 @@ body.dark-mode .brand-name {
 .cart-user-info strong {
   color: #1a7a4a;
 }
+
+/* ===========================
+   MOBILE RESPONSIVE - FULL FIX
+=========================== */
+
+/* Hamburger button - hidden on desktop */
+.hamburger-btn {
+  display: none;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.4);
+  color: white;
+  font-size: 22px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Right side of navbar */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Hide navbar-right on desktop since cart/dark are in links */
+@media (min-width: 769px) {
+  .navbar-right .nav-cart-btn,
+  .navbar-right .dark-mode-btn {
+    display: none;
+  }
+  /* Show cart and dark mode inside navbar-links on desktop */
+  .navbar-links .nav-cart-btn,
+  .navbar-links .dark-mode-btn {
+    display: flex;
+  }
+}
+
+/* ── MOBILE (max 768px) ── */
+@media (max-width: 768px) {
+
+  /* Navbar */
+  .navbar {
+    padding: 12px 16px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+  }
+
+  .brand-name {
+    font-size: 15px;
+  }
+
+  .brand-icon {
+    font-size: 22px;
+  }
+
+  /* Show hamburger on mobile */
+  .hamburger-btn {
+    display: block;
+  }
+
+  /* Hide nav links by default on mobile */
+  .navbar-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    gap: 6px;
+    padding: 12px 0 6px 0;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    margin-top: 10px;
+  }
+
+  /* Show nav links when menu is open */
+  .navbar-links.open {
+    display: flex;
+  }
+
+  .navbar-links li {
+    width: 100%;
+  }
+
+  .nav-btn {
+    width: 100%;
+    text-align: left;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 15px;
+  }
+
+  .nav-user {
+    display: block;
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+
+  /* Hide cart and dark mode from links on mobile - they are in navbar-right */
+  .navbar-links .nav-cart-btn,
+  .navbar-links .dark-mode-btn {
+    display: none;
+  }
+
+  /* Hero Section */
+  .hero-section {
+    padding: 30px 16px;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-heading {
+    font-size: 28px;
+  }
+
+  .hero-subtext {
+    font-size: 15px;
+  }
+
+  .hero-features {
+    justify-content: center;
+  }
+
+  .feature-tag {
+    font-size: 12px;
+    padding: 5px 12px;
+  }
+
+  .hero-circle {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto;
+  }
+
+  .hero-emoji {
+    font-size: 50px;
+  }
+
+  /* Products */
+  .products-section {
+    padding: 30px 16px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .product-card {
+    border-radius: 10px;
+  }
+
+  .product-image {
+    height: 130px;
+  }
+
+  .product-name {
+    font-size: 13px;
+  }
+
+  .product-price {
+    font-size: 16px;
+  }
+
+  .product-btn-row {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .view-detail-btn,
+  .add-to-cart-btn {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  /* Search */
+  .search-bar-wrapper {
+    margin: 0 0 16px 0;
+  }
+
+  /* Reviews */
+  .reviews-section {
+    padding: 30px 16px;
+  }
+
+  .review-form {
+    max-width: 100%;
+  }
+
+  .submit-review-btn {
+    align-self: stretch;
+    text-align: center;
+  }
+
+  /* Section headings */
+  .section-heading {
+    font-size: 24px;
+  }
+
+  /* About page */
+  .about-page {
+    padding: 24px 16px;
+  }
+
+  .team-cards {
+    flex-direction: column;
+  }
+
+  /* Auth pages */
+  .auth-card {
+    padding: 28px 20px;
+    margin: 16px;
+  }
+
+  .auth-title {
+    font-size: 22px;
+  }
+
+  /* Detail page */
+  .detail-page {
+    padding: 20px 16px 40px;
+  }
+
+  .detail-left {
+    width: 100%;
+  }
+
+  .detail-name {
+    font-size: 22px;
+  }
+
+  .detail-info-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* Cart */
+  .cart-header,
+  .orders-header,
+  .lab-header {
+    padding: 24px 16px;
+  }
+
+  .cart-title,
+  .orders-title,
+  .lab-title {
+    font-size: 24px;
+  }
+
+  .cart-body {
+    padding: 16px;
+    flex-direction: column;
+  }
+
+  .cart-summary {
+    width: 100%;
+    position: static;
+  }
+
+  .cart-item-card {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .cart-item-image {
+    width: 60px;
+    height: 60px;
+  }
+
+  .cart-item-controls {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Orders */
+  .orders-body {
+    padding: 16px;
+  }
+
+  .tracking-steps {
+    overflow-x: auto;
+    padding: 10px 0;
+    justify-content: flex-start;
+  }
+
+  .tracking-line {
+    width: 30px;
+  }
+
+  .tracking-label {
+    font-size: 10px;
+    max-width: 55px;
+  }
+
+  /* Lab Test */
+  .lab-tests-grid-wrapper {
+    padding: 20px 16px;
+  }
+
+  .lab-tests-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .lab-test-card {
+    padding: 14px;
+  }
+
+  .lab-form-wrapper {
+    padding: 20px 16px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .step-line {
+    width: 30px;
+  }
+
+  .step-dot p {
+    font-size: 10px;
+  }
+
+  /* Confirm card */
+  .confirm-card {
+    padding: 24px 16px;
+    margin: 0 16px;
+  }
+
+  .confirm-actions {
+    flex-direction: column;
+  }
+
+  /* Popup */
+  .popup-box {
+    padding: 28px 20px;
+    margin: 16px;
+  }
+
+  .popup-title {
+    font-size: 19px;
+  }
+
+  .popup-benefits {
+    gap: 8px;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 16px;
+    font-size: 13px;
+  }
+}
+
+/* ── VERY SMALL SCREENS (max 400px) ── */
+@media (max-width: 400px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-heading {
+    font-size: 24px;
+  }
+
+  .brand-name {
+    font-size: 13px;
+  }
+}
+
+/* Dark mode mobile fixes */
+body.dark-mode .navbar-links.open {
+  background-color: #0d3d26;
+  border-radius: 0 0 12px 12px;
+  padding: 12px;
+}
