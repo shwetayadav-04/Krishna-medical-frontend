@@ -9,11 +9,14 @@ import MedicineDetail from './pages/MedicineDetail';
 import LabTest from './pages/LabTest';
 import Cart from './pages/Cart';
 import Orders from './pages/Orders';
+import Profile from './pages/Profile';
+import Wishlist from './pages/Wishlist';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [selectedMedicine, setSelectedMedicine] = useState(null);
   const [cartItems, setCartItems] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(() => {
     const saved = localStorage.getItem('kms_loggedIn');
@@ -32,6 +35,7 @@ function App() {
     }
   }, [loggedInUser]);
 
+  // Add to cart - works WITHOUT login
   function addToCart(medicine) {
     setCartItems((prev) => {
       const existing = prev.find((item) => item.id === medicine.id);
@@ -40,23 +44,51 @@ function App() {
     });
   }
 
+  // Toggle wishlist
+  function toggleWishlist(medicine) {
+    setWishlist((prev) => {
+      const exists = prev.find((item) => item.id === medicine.id);
+      if (exists) return prev.filter((item) => item.id !== medicine.id);
+      return [...prev, medicine];
+    });
+  }
+
   const cartCount = cartItems.reduce((sum, item) => sum + item.qty, 0);
 
   return (
     <div className={darkMode ? 'app dark' : 'app'}>
-      <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage}
-        loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}
-        cartCount={cartCount} darkMode={darkMode} setDarkMode={setDarkMode} />
+      <Navbar
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        loggedInUser={loggedInUser}
+        setLoggedInUser={setLoggedInUser}
+        cartCount={cartCount}
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
+      />
 
-      {currentPage === 'home' && <Home setCurrentPage={setCurrentPage} setSelectedMedicine={setSelectedMedicine} loggedInUser={loggedInUser} addToCart={addToCart} />}
+      {currentPage === 'home' && (
+        <Home setCurrentPage={setCurrentPage} setSelectedMedicine={setSelectedMedicine}
+          loggedInUser={loggedInUser} addToCart={addToCart}
+          wishlist={wishlist} toggleWishlist={toggleWishlist} />
+      )}
       {currentPage === 'about' && <About />}
       {currentPage === 'login' && <Login setCurrentPage={setCurrentPage} setLoggedInUser={setLoggedInUser} />}
       {currentPage === 'signup' && <Signup setCurrentPage={setCurrentPage} />}
-      {currentPage === 'detail' && <MedicineDetail medicine={selectedMedicine} setCurrentPage={setCurrentPage} />}
+      {currentPage === 'detail' && <MedicineDetail medicine={selectedMedicine} setCurrentPage={setCurrentPage} addToCart={addToCart} />}
       {currentPage === 'labtest' && <LabTest loggedInUser={loggedInUser} setCurrentPage={setCurrentPage} />}
       {currentPage === 'cart' && <Cart cartItems={cartItems} setCartItems={setCartItems} setCurrentPage={setCurrentPage} loggedInUser={loggedInUser} />}
       {currentPage === 'orders' && <Orders setCurrentPage={setCurrentPage} loggedInUser={loggedInUser} />}
+      {currentPage === 'profile' && (
+        <Profile loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}
+          setCurrentPage={setCurrentPage} darkMode={darkMode} setDarkMode={setDarkMode} />
+      )}
+      {currentPage === 'wishlist' && (
+        <Wishlist wishlist={wishlist} setWishlist={setWishlist}
+          addToCart={addToCart} setCurrentPage={setCurrentPage} />
+      )}
 
+      {/* Signup Popup */}
       {showPopup && (
         <div className="popup-overlay" onClick={() => setShowPopup(false)}>
           <div className="popup-box" onClick={(e) => e.stopPropagation()}>
