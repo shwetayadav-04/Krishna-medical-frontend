@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// Backend URL — change this if you deploy later
-const BASE_URL = 'http://localhost:5000/api';
+// Backend URL
+const BASE_URL = 'https://krishna-medical-backend.onrender.com/api';
 
 // ─── AUTH ─────────────────────────────────────────────
 
