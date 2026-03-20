@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { apiSignup } from '../api';
 
 function Signup({ setCurrentPage }) {
   const [name, setName] = useState('');
@@ -7,8 +8,9 @@ function Signup({ setCurrentPage }) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  function handleSignup() {
+  async function handleSignup() {
     if (!name || !email || !password || !confirmPassword) {
       setError('All fields are required.');
       return;
@@ -21,16 +23,23 @@ function Signup({ setCurrentPage }) {
       setError('Passwords do not match.');
       return;
     }
-    const users = JSON.parse(localStorage.getItem('kms_users') || '[]');
-    if (users.find((u) => u.email === email)) {
-      setError('This email is already registered. Please login.');
-      return;
-    }
-    users.push({ name, email, password });
-    localStorage.setItem('kms_users', JSON.stringify(users));
-    setSuccess('Account created successfully! Redirecting to login...');
+
+    setLoading(true);
     setError('');
-    setTimeout(() => setCurrentPage('login'), 1800);
+
+    try {
+      await apiSignup(name, email, password);
+      setSuccess('✅ Account created! Redirecting to login...');
+      setTimeout(() => setCurrentPage('login'), 1800);
+    } catch (err) {
+      const msg = err.response?.data?.message || '';
+      if (err.code === 'ERR_NETWORK' || !err.response) {
+        setError('⚠️ Server is starting up. Please wait 30-60 seconds and try again.');
+      } else {
+        setError(msg || 'Something went wrong. Try again.');
+      }
+    }
+    setLoading(false);
   }
 
   return (
@@ -41,7 +50,12 @@ function Signup({ setCurrentPage }) {
         <p className="auth-subtitle">Join Krishna Medical Store for free</p>
 
         {error && <div className="auth-error">⚠️ {error}</div>}
-        {success && <div className="auth-success">✅ {success}</div>}
+        {success && <div className="auth-success">{success}</div>}
+
+        {/* Server wake up notice */}
+        <div className="server-notice">
+          💡 First time? Server may take <strong>30-60 seconds</strong> to wake up.
+        </div>
 
         <div className="auth-field">
           <label>Full Name</label>
@@ -64,7 +78,9 @@ function Signup({ setCurrentPage }) {
             onChange={(e) => { setConfirmPassword(e.target.value); setError(''); }} />
         </div>
 
-        <button className="auth-btn" onClick={handleSignup}>Create Account</button>
+        <button className="auth-btn" onClick={handleSignup} disabled={loading}>
+          {loading ? '⏳ Creating Account...' : 'Create Account'}
+        </button>
 
         <p className="auth-switch">
           Already have an account?{' '}
